@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 fee = monthD*12.075f-110.25f;
             }
             Intent intent = new Intent(this, ResultActivity.class);
+            intent.putExtra("FEE", fee);
             startActivity(intent);
             /*new AlertDialog.Builder(MainActivity.this)
                     .setTitle("每月抄表費用")
