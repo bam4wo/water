@@ -15,13 +15,17 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText edmonth;
     private EditText ednext;
     private Button button;
+    boolean isNext = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         edmonth = findViewById(R.id.month);
-        ednext = findViewById(R.id.next);
         button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +51,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        Switch sw = findViewById(R.id.sw);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                isNext = isChecked;
+                TextView type = findViewById(R.id.type);
+                type.setText(isNext ? getString(R.string.evert_other_month ): getString(R.string.Monthly));
             }
         });
     }
@@ -131,15 +143,17 @@ public class MainActivity extends AppCompatActivity {
             }else if(monthD>=51){
                 fee = monthD*12.075f-110.25f;
             }
-            Intent intent = new Intent(this, ResultActivity.class);
-            intent.putExtra(getString(R.string.extra_fee), fee);
-            startActivity(intent);
+        }
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra(getString(R.string.extra_fee), fee);
+        startActivity(intent);
+
             /*new AlertDialog.Builder(MainActivity.this)
                     .setTitle("每月抄表費用")
                     .setMessage("費用："+fee)
                     .setPositiveButton("ok", null)
                     .show();*/
-        }
+    }
         /*
         else {
             String next = ednext.getText().toString();
@@ -163,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
          */
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
