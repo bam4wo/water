@@ -132,14 +132,16 @@ public class MainActivity extends AppCompatActivity {
                 fee = monthD*12.075f-110.25f;
             }
             Intent intent = new Intent(this, ResultActivity.class);
-            intent.putExtra("FEE", fee);
+            intent.putExtra(getString(R.string.extra_fee), fee);
             startActivity(intent);
             /*new AlertDialog.Builder(MainActivity.this)
                     .setTitle("每月抄表費用")
                     .setMessage("費用："+fee)
                     .setPositiveButton("ok", null)
                     .show();*/
-        }else {
+        }
+        /*
+        else {
             String next = ednext.getText().toString();
             if (!TextUtils.isEmpty(next)){
                 float nextD = Float.parseFloat(next);
@@ -159,6 +161,8 @@ public class MainActivity extends AppCompatActivity {
                         .show();
             }
         }
+
+         */
     }
 
     @Override
