@@ -11,12 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -26,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText ednext;
     private Button button;
     boolean isNext = false;
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG,"onCreate");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         edmonth = findViewById(R.id.month);
@@ -64,73 +69,122 @@ public class MainActivity extends AppCompatActivity {
                 type.setText(isNext ? getString(R.string.evert_other_month ): getString(R.string.Monthly));
             }
         });
+
+        Spinner cities = findViewById(R.id.spinner);
+        cities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, getResources().getStringArray(R.array.cities)[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+    //覆寫生命週期方法
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG,"onPause");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG,"onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG,"onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG,"onDestroy");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG,"onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG,"onRestart");
     }
 
     /*public void enter(View view){
-        int monthh = Integer.parseInt(edmonth.getText().toString());
-        int nextt = Integer.parseInt(ednext.getText().toString());
-        float total;
-        float total2;
-        if(monthh>=1 && monthh <= 10){
-            total = monthh*7.35f;
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("每月抄表費用")
-                    .setMessage("費用："+total)
-                    .setPositiveButton("ok",null)
-                    .show();
-        }else if(monthh>=11 && monthh <= 30){
-            total = monthh*9.45f-21;
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("每月抄表費用")
-                    .setMessage("費用："+total)
-                    .setPositiveButton("ok",null)
-                    .show();
-        }else if(monthh>=31 && monthh <= 50) {
-            total = monthh * 11.55f - 84;
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("每月抄表費用")
-                    .setMessage("費用："+total)
-                    .setPositiveButton("ok", null)
-                    .show();
-        }else if(monthh>=51 ) {
-            total = monthh * 12.075f - 110.25f;
-            new AlertDialog.Builder(MainActivity.this)
-                    .setTitle("每月抄表費用")
-                    .setMessage("費用："+total)
-                    .setPositiveButton("ok", null)
-                    .show();
-        }
-            if(nextt>=1 && nextt <= 20){
-                total2 = nextt*7.35f;
+            int monthh = Integer.parseInt(edmonth.getText().toString());
+            int nextt = Integer.parseInt(ednext.getText().toString());
+            float total;
+            float total2;
+            if(monthh>=1 && monthh <= 10){
+                total = monthh*7.35f;
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用："+total2)
+                        .setTitle("每月抄表費用")
+                        .setMessage("費用："+total)
                         .setPositiveButton("ok",null)
                         .show();
-            }else if(nextt>=20 && nextt <= 60){
-                total2 = nextt*9.45f-42;
+            }else if(monthh>=11 && monthh <= 30){
+                total = monthh*9.45f-21;
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用："+total2)
+                        .setTitle("每月抄表費用")
+                        .setMessage("費用："+total)
                         .setPositiveButton("ok",null)
                         .show();
-            }else if(nextt>=61 && nextt <= 100) {
-                total2 = nextt * 11.55f - 168;
+            }else if(monthh>=31 && monthh <= 50) {
+                total = monthh * 11.55f - 84;
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用")
-                        .setMessage("費用："+total2)
+                        .setTitle("每月抄表費用")
+                        .setMessage("費用："+total)
                         .setPositiveButton("ok", null)
                         .show();
-            }else if(nextt>=101 ) {
-                total2 = nextt * 12.075f - 220.5f;
+            }else if(monthh>=51 ) {
+                total = monthh * 12.075f - 110.25f;
                 new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("隔月抄表費用" )
-                        .setMessage("費用："+total2)
+                        .setTitle("每月抄表費用")
+                        .setMessage("費用："+total)
                         .setPositiveButton("ok", null)
                         .show();
             }
+                if(nextt>=1 && nextt <= 20){
+                    total2 = nextt*7.35f;
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("隔月抄表費用")
+                            .setMessage("費用："+total2)
+                            .setPositiveButton("ok",null)
+                            .show();
+                }else if(nextt>=20 && nextt <= 60){
+                    total2 = nextt*9.45f-42;
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("隔月抄表費用")
+                            .setMessage("費用："+total2)
+                            .setPositiveButton("ok",null)
+                            .show();
+                }else if(nextt>=61 && nextt <= 100) {
+                    total2 = nextt * 11.55f - 168;
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("隔月抄表費用")
+                            .setMessage("費用："+total2)
+                            .setPositiveButton("ok", null)
+                            .show();
+                }else if(nextt>=101 ) {
+                    total2 = nextt * 12.075f - 220.5f;
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("隔月抄表費用" )
+                            .setMessage("費用："+total2)
+                            .setPositiveButton("ok", null)
+                            .show();
+                }
 
-    }*/
+        }*/
     public void enter(){
         String month = edmonth.getText().toString();
         float fee = 0;
